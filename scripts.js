@@ -1,18 +1,10 @@
-// Handle enquiry form submission
-/*
- * Client-side logic for the Staunton Education portal.
- *
- * Instead of saving data into localStorage, this script communicates
- * with a simple Python backend (see server.py) using the Fetch API.
- * Each form submission sends a POST request to the appropriate
- * endpoint and displays the server's response in a friendly way.
- */
+// Client-side logic for the Staunton Education portal.
+// Each form submission sends a POST request to the appropriate
+// Netlify Function and displays the response.
 
 document.addEventListener('DOMContentLoaded', () => {
   /**
    * Handle enquiry form submission.
-   * Sends a JSON payload to /api/enquiry and shows a thank-you message
-   * returned from the server.
    */
   const enquiryForm = document.getElementById('enquiryForm');
   if (enquiryForm) {
@@ -28,16 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       const msgDiv = document.getElementById('enquiryMessage');
       try {
-        const response = await fetch('/api/enquiry', {
+        const response = await fetch('/.netlify/functions/submit-enquiry', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
         const result = await response.json();
-        msgDiv.textContent = result.message || 'Thank you for your enquiry.';
+        msgDiv.textContent = result.message || '✅ Thank you for your enquiry.';
       } catch (err) {
         console.error(err);
-        msgDiv.textContent = 'There was an error submitting your enquiry. Please try again later.';
+        msgDiv.textContent = '❌ There was an error submitting your enquiry. Please try again later.';
       }
       msgDiv.style.display = 'block';
       enquiryForm.reset();
@@ -46,13 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /**
    * Handle enrolment form submission.
-   * Sends a JSON payload to /api/enrolment and shows a confirmation message.
    */
   const enrolmentForm = document.getElementById('enrolmentForm');
   if (enrolmentForm) {
     enrolmentForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      // Ensure the user has accepted the terms.
       if (!enrolmentForm.agreeTerms.checked) {
         alert('You must agree to the terms and conditions.');
         return;
@@ -65,20 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
         dob: enrolmentForm.dob.value,
         address: enrolmentForm.address.value,
         emergencyContact: enrolmentForm.emergencyContact.value,
-        allergies: enrolmentForm.allergies.value
+        allergies: enrolmentForm.allergies.value,
+        agreeTerms: enrolmentForm.agreeTerms.checked
       };
       const msgDiv = document.getElementById('enrolmentMessage');
       try {
-        const response = await fetch('/api/enrolment', {
+        const response = await fetch('/.netlify/functions/submit-enrolment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
         const result = await response.json();
-        msgDiv.textContent = result.message || 'Enrolment submitted successfully.';
+        msgDiv.textContent = result.message || '✅ Enrolment submitted successfully.';
       } catch (err) {
         console.error(err);
-        msgDiv.textContent = 'There was an error submitting your enrolment. Please try again later.';
+        msgDiv.textContent = '❌ There was an error submitting your enrolment. Please try again later.';
       }
       msgDiv.style.display = 'block';
       enrolmentForm.reset();
