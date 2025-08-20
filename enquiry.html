@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enquiry Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <img src="logo.png" alt="Staunton Education Logo" style="height:60px; width:auto;">
+      <h1 style="margin:0;">Enquiry Form</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="enquiry.html">Enquiry</a></li>
+        <li><a href="enrolment.html">Enrolment</a></li>
+        <li><a href="booking.html">Booking</a></li>
+        <li><a href="portal.html">Parent Portal</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Submit an enquiry</h2>
+    <form id="enquiryForm">
+      <label for="parentName">Your Name</label>
+      <input type="text" id="parentName" name="parentName" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="childAge">Child's Age</label>
+      <input type="number" id="childAge" name="childAge" min="5" max="18" required>
+
+      <label for="message">Message / Questions</label>
+      <textarea id="message" name="message" rows="4"></textarea>
+
+      <label for="introCall">Would you like to schedule an introductory call?</label>
+      <select id="introCall" name="introCall">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <button type="submit">Submit Enquiry</button>
+    </form>
+    <div id="enquiryMessage" class="message" style="display:none;"></div>
+  </main>
+  <!-- Dark blue mission section -->
+  <section class="blue-section">
+    <h2>Our Mission</h2>
+    <p>Our goal is to make excellent 11+ preparation accessible and effective for every family. Through a blend of tradition and innovation, we aim to simplify enrolment, booking, and progress tracking, while maintaining our proven tutoring quality.</p>
+  </section>
+  <script src="scripts.js"></script>
+</body>
+</html>

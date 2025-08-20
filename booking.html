@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Session</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <img src="logo.png" alt="Staunton Education Logo" style="height:60px; width:auto;">
+      <h1 style="margin:0;">Book a Session</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="enquiry.html">Enquiry</a></li>
+        <li><a href="enrolment.html">Enrolment</a></li>
+        <li><a href="booking.html">Booking</a></li>
+        <li><a href="portal.html">Parent Portal</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Select Sessions</h2>
+    <div id="sessionList"></div>
+    <button id="bookSessions">Book Selected Sessions</button>
+    <div id="bookingMessage" class="message" style="display:none;"></div>
+    <!-- End of booking form -->
+  </main>
+  <!-- Dark blue mission section -->
+  <section class="blue-section">
+    <h2>Our Mission</h2>
+    <p>Our goal is to make excellent 11+ preparation accessible and effective for every family. Through a blend of tradition and innovation, we aim to simplify enrolment, booking, and progress tracking, while maintaining our proven tutoring quality.</p>
+  </section>
+  <script src="scripts.js"></script>
+  <script>
+    /**
+     * Booking page script.
+     *
+     * Fetches available sessions from the backend and renders them as a list
+     * of checkboxes. When the user books sessions, a POST request is sent
+     * to /api/book with the selected session IDs. On success, a message
+     * from the server is shown.
+     */
+    let availableSessions = [];
+    /** Render session checkboxes into the sessionList element */
+    function renderSessions() {
+      const container = document.getElementById('sessionList');
+      container.innerHTML = '';
+      if (!availableSessions || availableSessions.length === 0) {
+        container.textContent = 'No sessions available at this time.';
+        return;
+      }
+      availableSessions.forEach(session => {
+        const div = document.createElement('div');
+        div.className = 'session-item';
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = session.id;
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(` ${session.course} – ${session.date} @ ${session.time} with ${session.tutor}`));
+        div.appendChild(label);
+        container.appendChild(div);
+      });
+    }
+    /** Load sessions from the backend */
+    async function loadSessions() {
+      try {
+        const response = await fetch('/api/sessions');
+        availableSessions = await response.json();
+      } catch (err) {
+        console.error(err);
+        availableSessions = [];
+      }
+      renderSessions();
+    }
+    // Load sessions on page load
+    loadSessions();
+    // Handle booking
+    document.getElementById('bookSessions').addEventListener('click', async () => {
+      const selected = Array.from(document.querySelectorAll('#sessionList input:checked')).map(c => c.value);
+      if (selected.length === 0) {
+        alert('Please select at least one session to book.');
+        return;
+      }
+      try {
+        const response = await fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionIds: selected })
+        });
+        const result = await response.json();
+        document.getElementById('bookingMessage').textContent = result.message || 'Your sessions have been booked successfully.';
+      } catch (err) {
+        console.error(err);
+        document.getElementById('bookingMessage').textContent = 'There was an error booking your sessions. Please try again later.';
+      }
+      document.getElementById('bookingMessage').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

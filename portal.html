@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <img src="logo.png" alt="Staunton Education Logo" style="height:60px; width:auto;">
+      <h1 style="margin:0;">Parent Portal</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="enquiry.html">Enquiry</a></li>
+        <li><a href="enrolment.html">Enrolment</a></li>
+        <li><a href="booking.html">Booking</a></li>
+        <li><a href="portal.html">Parent Portal</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Your Dashboard</h2>
+    <section id="bookingsSection">
+      <h3>Upcoming Sessions</h3>
+      <ul id="bookingList"></ul>
+    </section>
+    <section id="reportsSection">
+      <h3>Child Progress (Sample Data)</h3>
+      <p>English: 82% – On track</p>
+      <p>Maths: 76% – Needs improvement in geometry</p>
+      <p>Science: 88% – Excellent understanding of current topics</p>
+    </section>
+  </main>
+  <!-- Dark blue mission section -->
+  <section class="blue-section">
+    <h2>Our Mission</h2>
+    <p>Our goal is to make excellent 11+ preparation accessible and effective for every family. Through a blend of tradition and innovation, we aim to simplify enrolment, booking, and progress tracking, while maintaining our proven tutoring quality.</p>
+  </section>
+  <script>
+    /**
+     * Parent portal script.
+     *
+     * Fetches booked sessions from the backend and renders them. Each booking
+     * includes a cancel button that sends a DELETE request to /api/bookings
+     * with the index of the booking to remove. After cancellation, the
+     * bookings list is reloaded.
+     */
+    async function loadBookings() {
+      const list = document.getElementById('bookingList');
+      list.innerHTML = '';
+      let bookings;
+      try {
+        const response = await fetch('/api/bookings');
+        bookings = await response.json();
+      } catch (err) {
+        console.error(err);
+        bookings = [];
+      }
+      if (!bookings || bookings.length === 0) {
+        list.innerHTML = '<li>No sessions booked yet.</li>';
+        return;
+      }
+      bookings.forEach((b, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${b.course} – ${b.date} @ ${b.time} with ${b.tutor}`;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Cancel';
+        removeBtn.style.marginLeft = '1rem';
+        removeBtn.addEventListener('click', async () => {
+          try {
+            await fetch('/api/bookings', {
+              method: 'DELETE',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ index })
+            });
+          } catch (err) {
+            console.error(err);
+          }
+          loadBookings();
+        });
+        li.appendChild(removeBtn);
+        list.appendChild(li);
+      });
+    }
+    // Initialise bookings on page load
+    loadBookings();
+  </script>
+</body>
+</html>

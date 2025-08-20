@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enrolment Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <img src="logo.png" alt="Staunton Education Logo" style="height:60px; width:auto;">
+      <h1 style="margin:0;">Enrolment Form</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="enquiry.html">Enquiry</a></li>
+        <li><a href="enrolment.html">Enrolment</a></li>
+        <li><a href="booking.html">Booking</a></li>
+        <li><a href="portal.html">Parent Portal</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Complete your enrolment</h2>
+    <form id="enrolmentForm">
+      <label for="parentName">Parent Name</label>
+      <input type="text" id="parentName" name="parentName" required>
+
+      <label for="parentEmail">Email Address</label>
+      <input type="email" id="parentEmail" name="parentEmail" required>
+
+      <label for="parentPhone">Phone Number</label>
+      <input type="tel" id="parentPhone" name="parentPhone" required>
+
+      <label for="childName">Child's Full Name</label>
+      <input type="text" id="childName" name="childName" required>
+
+      <label for="dob">Child's Date of Birth</label>
+      <input type="date" id="dob" name="dob" required>
+
+      <label for="address">Home Address</label>
+      <textarea id="address" name="address" rows="2" required></textarea>
+
+      <label for="emergencyContact">Emergency Contact Number</label>
+      <input type="tel" id="emergencyContact" name="emergencyContact" required>
+
+      <label for="allergies">Allergies / Medical Notes</label>
+      <textarea id="allergies" name="allergies" rows="2"></textarea>
+
+      <label>
+        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+        I have read and accept the <a href="#" onclick="alert('Terms and Conditions placeholder'); return false;">terms and conditions</a>.
+      </label>
+
+      <button type="submit">Submit Enrolment</button>
+    </form>
+    <div id="enrolmentMessage" class="message" style="display:none;"></div>
+  </main>
+  <!-- Dark blue mission section -->
+  <section class="blue-section">
+    <h2>Our Mission</h2>
+    <p>Our goal is to make excellent 11+ preparation accessible and effective for every family. Through a blend of tradition and innovation, we aim to simplify enrolment, booking, and progress tracking, while maintaining our proven tutoring quality.</p>
+  </section>
+  <script src="scripts.js"></script>
+</body>
+</html>
