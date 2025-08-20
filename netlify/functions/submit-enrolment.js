@@ -1,5 +1,7 @@
 import postgres from "postgres";
-const sql = postgres(process.env.DATABASE_URL, { ssl: "require" });
+
+// Use the environment variable provided by Netlify’s Neon extension
+const sql = postgres(process.env.NETLIFY_DATABASE_URL, { ssl: "require" });
 
 export default async (req) => {
   if (req.method !== "POST") {
@@ -23,13 +25,12 @@ export default async (req) => {
       );
     `;
 
-    return new Response(JSON.stringify({ ok: true }), {
+    return new Response(JSON.stringify({ ok: true, message: "Enrolment saved successfully." }), {
       headers: { "Content-Type": "application/json" },
       status: 200,
     });
   } catch (err) {
-    console.error(err);
+    console.error("submit-enrolment error:", err);
     return new Response("Server error", { status: 500 });
   }
 };
-
