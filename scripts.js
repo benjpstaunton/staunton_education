@@ -79,15 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Set favicon for all pages
 (function setFavicon() {
-  const linkPng = document.createElement('link');
-  linkPng.rel = 'icon';
-  linkPng.type = 'image/png';
-  linkPng.href = '/favicon.png';
-  document.head.appendChild(linkPng);
-
-  // Optional: also provide .ico if you add one later
-  // const linkIco = document.createElement('link');
-  // linkIco.rel = 'icon';
-  // linkIco.href = '/favicon.ico';
-  // document.head.appendChild(linkIco);
+  const link = document.createElement('link');
+  link.rel = 'icon';
+  link.type = 'image/png';
+  link.href = '/logo.png';   // points to your existing file
+  document.head.appendChild(link);
 })();
