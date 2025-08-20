@@ -19,7 +19,7 @@ export default async (req) => {
       VALUES (
         ${data.parentName}, ${data.parentEmail}, ${data.parentPhone},
         ${data.childName}, ${data.dob}, ${data.address},
-        ${data.emergencyContact}, ${data.allergies}, ${data.agreeTerms === "on"}
+        ${data.emergencyContact}, ${data.allergies}, ${data.agreeTerms}
       );
     `;
 
@@ -32,3 +32,4 @@ export default async (req) => {
     return new Response("Server error", { status: 500 });
   }
 };
+
