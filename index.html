@@ -5,6 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Staunton Education Portal</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Cookie banner styling */
+    #cookieBanner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #003366;
+      color: #fff;
+      padding: 1rem;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      z-index: 1000;
+    }
+    #cookieBanner button {
+      margin-left: 0.5rem;
+      background: #fff;
+      color: #003366;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    #cookieBanner button:hover {
+      background: #e5e5e5;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -16,26 +46,72 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="enquiry.html">Enquiry</a></li>
-
         <li><a href="portal.html">Parent Portal</a></li>
       </ul>
     </nav>
   </header>
+
   <main>
-    <!-- Hero section introducing the portal -->
+    <!-- Hero section -->
     <section class="hero">
       <h2>Welcome to Staunton Education</h2>
-      <p>Staunton Education has provided high‑quality tuition for over 25 years. We are excited to introduce our new digital portal, designed to streamline administration and provide parents and students with a seamless online experience.</p>
+      <p>
+        We provide specialist preparation for the 11+ examination, combining
+        25 years of proven teaching experience with modern digital tools.
+        Our approach focuses on building confidence in English, maths,
+        verbal and non-verbal reasoning, while ensuring each child feels
+        supported and motivated.
+      </p>
+      <p>
+        Families can enquire online, access resources through our secure parent
+        portal, and receive personalised support throughout their child’s
+        journey. Whether you are just beginning to explore the 11+ or already
+        preparing, we aim to make the process simple, effective, and reassuring.
+      </p>
     </section>
   </main>
-  <!-- Dark blue mission section -->
+
   <section class="blue-section">
     <h2>Our Mission</h2>
-    <p>Our goal is to make excellent 11+ preparation accessible and effective for every family. Through a blend of tradition and innovation, we aim to simplify enrolment, booking, and progress tracking, while maintaining our proven tutoring quality.</p>
+    <p>
+      Our goal is to make excellent 11+ preparation accessible and effective for every family.
+      Through a blend of tradition and innovation, we aim to simplify enrolment, booking,
+      and progress tracking, while maintaining our proven tutoring quality.
+    </p>
   </section>
+
   <footer>
-    <p>&copy; 2025 Staunton Education Ltd.  All rights reserved.</p>
+    <p>&copy; 2025 Staunton Education Ltd. All rights reserved.</p>
   </footer>
-<script src="scripts.js"></script>
+
+  <!-- Cookie consent banner -->
+  <div id="cookieBanner">
+    <span>
+      We use cookies to improve your experience. Do you accept cookies?
+    </span>
+    <div>
+      <button id="acceptCookies">Accept</button>
+      <button id="rejectCookies">Reject</button>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script>
+    // Cookie banner logic
+    document.addEventListener("DOMContentLoaded", () => {
+      const banner = document.getElementById("cookieBanner");
+      if (!localStorage.getItem("cookieConsent")) {
+        banner.style.display = "flex";
+      }
+      document.getElementById("acceptCookies").addEventListener("click", () => {
+        localStorage.setItem("cookieConsent", "accepted");
+        banner.style.display = "none";
+      });
+      document.getElementById("rejectCookies").addEventListener("click", () => {
+        localStorage.setItem("cookieConsent", "rejected");
+        banner.style.display = "none";
+      });
+    });
+  </script>
 </body>
 </html>
