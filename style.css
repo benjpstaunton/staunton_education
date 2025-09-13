@@ -132,3 +132,19 @@ button:hover {
   border-left: 4px solid #2d5a99;
   background-color: #e8eef8;
 }
+
+/* Center & size the login form */
+.auth-card {
+  max-width: 420px;   /* how wide the form should be */
+  margin: 0 auto;     /* centers it */
+}
+.auth-card input,
+.auth-card button {
+  width: 100%;
+  box-sizing: border-box; /* keep padding inside 100% width */
+}
+
+/* optional: center the heading above the form */
+.auth-card-title {
+  text-align: center;
+}
